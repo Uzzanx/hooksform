@@ -7,7 +7,7 @@ function App() {
   return (
     <main className="register-page">
       <RegistrationForm />
-      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} />
+      <ToastContainer autoClose={2000} />
     </main>
   );
 }

@@ -1,0 +1,17 @@
+.submit-result {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #d6d6d6;
+}
+
+.submit-result__title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #222;
+}
+
+.submit-result__row {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #222;
+}

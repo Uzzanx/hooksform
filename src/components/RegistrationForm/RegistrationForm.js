@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import FormField from '../FormField/FormField';
-import SubmissionResult from '../SubmissionResult/SubmissionResult';
+import SubmitResult from '../SubmitResult/SubmitResult';
 import './RegistrationForm.css';
 
 function RegistrationForm() {
-  const [submittedData, setSubmittedData] = useState(null);
+  const [data, setData] = useState(null);
 
   const {
     register,
@@ -20,87 +20,72 @@ function RegistrationForm() {
 
   const passwordValue = watch('password');
 
-  const onSubmit = (data) => {
-    setSubmittedData(data);
+  const onSubmit = (values) => {
+    setData(values);
     toast.success('Данные успешно отправлены.');
     reset();
   };
 
   return (
-    <section className="register-form" aria-labelledby="register-form-title">
-      <h1 className="register-form__title" id="register-form-title">
-        Данные профиля
-      </h1>
-      <p className="register-form__subtitle">Заполните форму и продолжите.</p>
-
+    <section className="register-form">
+      <h1 className="register-form__title">Форма регистрации</h1>
       <form className="register-form__body" onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormField
-          id="name"
+          name="name"
           label="Имя"
-          placeholder="Введите ваше имя"
           register={register}
-          validation={{
-            required: 'Пожалуйста, введите имя.',
-            minLength: {
-              value: 2,
-              message: 'Имя должно содержать минимум 2 символа.',
-            },
+          rules={{
+            required: 'Введите имя',
+            minLength: { value: 2, message: 'Минимум 2 символа' },
           }}
           error={errors.name}
         />
 
         <FormField
-          id="email"
-          type="email"
+          name="email"
           label="Email"
-          placeholder="example@mail.com"
+          type="email"
           register={register}
-          validation={{
-            required: 'Пожалуйста, введите email.',
+          rules={{
+            required: 'Введите email',
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: 'Введите корректный email адрес.',
+              message: 'Некорректный email',
             },
           }}
           error={errors.email}
         />
 
         <FormField
-          id="password"
-          type="password"
+          name="password"
           label="Пароль"
-          placeholder="Не менее 6 символов"
+          type="password"
           register={register}
-          validation={{
-            required: 'Пожалуйста, введите пароль.',
-            minLength: {
-              value: 6,
-              message: 'Пароль должен содержать минимум 6 символов.',
-            },
+          rules={{
+            required: 'Введите пароль',
+            minLength: { value: 6, message: 'Минимум 6 символов' },
           }}
           error={errors.password}
         />
 
         <FormField
-          id="confirmPassword"
-          type="password"
+          name="confirmPassword"
           label="Подтверждение пароля"
-          placeholder="Повторите пароль"
+          type="password"
           register={register}
-          validation={{
-            required: 'Пожалуйста, подтвердите пароль.',
-            validate: (value) =>
-              value === passwordValue || 'Пароли не совпадают. Проверьте ввод.',
+          rules={{
+            required: 'Подтвердите пароль',
+            validate: (value) => value === passwordValue || 'Пароли не совпадают',
           }}
           error={errors.confirmPassword}
         />
 
         <button className="register-form__submit" type="submit">
-          Продолжить
+          Отправить
         </button>
       </form>
 
-      <SubmissionResult submittedData={submittedData} />
+      <SubmitResult data={data} />
     </section>
   );
 }
